@@ -8,25 +8,25 @@ stages:
   - build
 
 unit_tests:
-  image: tkigor/golang-gitlab-image:1.15.2
+  image: malkinfedor/golang-gitlab-image:1.15.2
   stage: test
   script:
     - go test -short
 
 race_detector:
-  image: tkigor/golang-gitlab-image:1.15.2
+  image: malkinfedor/golang-gitlab-image:1.15.2
   stage: test
   script:
     - go test -race -short
 
 memory_sanitizer:
-  image: tkigor/golang-gitlab-image:1.15.2
+  image: malkinfedor/golang-gitlab-image:1.15.2
   stage: test
   script:
     - go test -msan -short
 
 code_coverage_report:
-  image: tkigor/golang-gitlab-image:1.15.2
+  image: malkinfedor/golang-gitlab-image:1.15.2
   stage: test
   script:
     - go test -covermode=count -coverprofile wsperf-test.cov
@@ -39,7 +39,7 @@ code_coverage_report:
 
 # https://docs.gitlab.com/ee/ci/unit_test_reports.html#go-example
 junit_tests:
-  image: tkigor/golang-gitlab-image:1.15.2
+  image: malkinfedor/golang-gitlab-image:1.15.2
   stage: test
   script:
     - go test -v 2>&1 | go-junit-report -set-exit-code > report.xml
@@ -49,7 +49,7 @@ junit_tests:
       junit: report.xml
 
 lint_code:
-  image: tkigor/golang-gitlab-image:1.15.2
+  image: malkinfedor/golang-gitlab-image:1.15.2
   stage: test
   allow_failure: true 
   script:
@@ -57,7 +57,7 @@ lint_code:
 
       
 common-build:
-  image: tkigor/golang-gitlab-image:1.15.2
+  image: malkinfedor/golang-gitlab-image:1.15.2
   stage: build
   artifacts:
     paths:

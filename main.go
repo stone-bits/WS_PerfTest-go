@@ -12,7 +12,11 @@ import (
 )
 
 func getdtHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, time.Now().Format(time.RFC3339))
+	fmt.Fprint(w, getRespose())
+}
+
+func getRespose() string {
+	return time.Now().Format(time.RFC3339)
 }
 
 func normalizePathBase(pathBase string) string {

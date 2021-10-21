@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  perftest:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy 
+    ports:
+      - "5000:8181"
+    networks:
+      - back-tier  
+
+  db:
+    image: postgres:9.4
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+      - "./healthchecks:/healthchecks"
+    healthcheck:
+      test: /healthchecks/postgres.sh
+      interval: "5s"
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+
+networks:
+  back-tier:

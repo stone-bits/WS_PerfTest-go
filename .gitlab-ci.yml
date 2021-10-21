@@ -65,3 +65,19 @@ common-build:
     expire_in: 1 week
   script:
     - go build -i -v
+
+docker-build:dockerhub:
+  image: docker:19.03.12
+  services:
+    - docker:19.03.12-dind
+  before_script:
+    - docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_TOKEN}
+  stage: build
+  script:
+    - echo $DOCKERHUB_TOKEN
+    - docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_TAG} .
+    - docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_TAG} ${DOCKER_REPO}/${DOCKER_IMAGE_NAME}:${DOCKER_TAG}  
+    - docker run ${DOCKER_REPO}/${DOCKER_IMAGE_NAME}:${DOCKER_TAG} 
+    - docker push ${DOCKER_REPO}/${DOCKER_IMAGE_NAME}:${DOCKER_TAG}
+    - echo "The image was succesfully pushed:" ${DOCKER_REPO}/${DOCKER_IMAGE_NAME}:${DOCKER_TAG}  
+

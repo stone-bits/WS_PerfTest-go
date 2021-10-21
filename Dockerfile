@@ -13,4 +13,4 @@ FROM golang:1.15-alpine
 COPY --from=build /app /app
 WORKDIR /app
 
-ENTRYPOINT [ "./WS_PerfTest" ]
+ENTRYPOINT [ "./WS_PerfTest-go" ]
